@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="head :: common"></head>
+
+<body>
+    <div th:replace="head :: sidebar"></div>
+    <div th:replace="head :: header"></div>
+    <div th:replace="head :: chat-sidebar"></div>
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1>Create New Edge Station</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                    <div class="col-lg-4 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li class="active">Home</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                </div>
+                <!-- /# row -->
+                <div class="main-content">
+                    <div th:replace="head :: status-bar"></div>
+                    <!-- /# row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4>Edge Station Information</h4>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                             
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="basic-elements">
+                                        <form th:action="@{/edgestation_update}" th:object="${edgeStation}" method="POST">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>ID</label>
+                                                        <input th:field="*{edge_station_id}" type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Status</label>
+                                                        <select th:field="*{edgeStationStatus}" class="form-control">
+                                                            <option value="Running">Running</option>
+                                                            <option value="Stop">Stop</option>
+                                                            <option value="Maintaining">Maintaining</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Description</label>
+                                                        <textarea th:field="*{edgeStationDescription}" class="form-control" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Latitude</label>
+                                                        <input th:field="*{latitude}" type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Longitude</label>
+                                                        <input th:field="*{longitude}" type="text" class="form-control">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-default">Submit</button>
+                                                    <input type="button" class="btn"  value="Back" onclick="javascript:history.go(-1);"/>
+                                                </div>
+
+
+                                            </div>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# row -->
+                 </div>
+                 <!-- /# card -->
+             </div>
+             <!-- /# column -->
+         </div>
+     <!-- /# main content -->
+    </div>
+
+<!-- /# content wrap -->
+<script src="assets/js/lib/jquery.min.js"></script>
+<!-- jquery vendor -->
+<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+<!-- nano scroller -->
+<script src="assets/js/lib/sidebar.js"></script>
+<!-- sidebar -->
+<script src="assets/js/lib/bootstrap.min.js"></script>
+<!-- bootstrap -->
+<script src="assets/js/lib/mmc-common.js"></script>
+<script src="assets/js/lib/mmc-chat.js"></script>
+<!--  Chart js -->
+<script src="assets/js/lib/chart-js/Chart.bundle.js"></script>
+<script src="assets/js/lib/chart-js/chartjs-init.js"></script>
+<!-- // Chart js -->
+<!--  Datamap -->
+<script src="assets/js/lib/datamap/d3.min.js"></script>
+<script src="assets/js/lib/datamap/topojson.js"></script>
+<script src="assets/js/lib/datamap/datamaps.world.min.js"></script>
+<script src="assets/js/lib/datamap/datamap-init.js"></script>
+<script src="assets/lib/lobipanel/js/lobipanel.js"></script>
+<!-- // Datamap -->
+<script src="assets/js/scripts.js"></script>
+<!-- scripit init-->
+<script>
+    $(document).ready(function() {
+        $('#lobipanel-custom-control').lobiPanel({
+            reload: false,
+            close: false,
+            editTitle: false
+        });
+    });
+</script>
+</body>
+
+</html>

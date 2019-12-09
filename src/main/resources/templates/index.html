@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="head :: common"></head>
+<body>
+    <div th:replace="head :: sidebar"></div>
+    <div th:replace="head :: header"></div>
+    <div th:replace="head :: chat-sidebar"></div>
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1>Dashboard</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                    <div class="col-lg-4 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="#">Dashboard</a></li>
+                                    <li class="active">Home</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                </div>
+                <!-- /# row -->
+                <div class="main-content">
+                    <div th:replace="head :: status-bar"></div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4>Devices</h4>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                            <li class="card-collapse"><i class="fa fa-window-restore"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div id="map" style="width: 100%; height: 400px; background-color: grey"></div>
+                            </div>
+                        </div>
+                        <!-- /# column -->
+                    </div>
+                    <!-- /# row -->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4>Edge Stations </h4>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                            <li class="card-option drop-menu">
+                                                <i class="ti-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" role="link"></i>
+                                                <ul class="card-option-dropdown dropdown-menu">
+                                                    <li><a href="#"><i class="ti-loop"></i> Update data</a></li>
+                                                    <li><a href="#"><i class="ti-menu-alt"></i> Detail log</a></li>
+                                                    <li><a href="#"><i class="ti-pulse"></i> Statistics</a></li>
+                                                    <li><a href="#"><i class="ti-power-off"></i> Clear ist</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="card-collapse"><i class="fa fa-window-restore"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body  card-content">
+                                    <table class="table table-responsive table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Status</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="edgeStation,edgeStationStat:${edgeStations}" th:if="${edgeStationStat.index} lt 5">
+                                                <td>
+                                                    <a th:href="@{/edgestation_edit(edgeStationId=${edgeStation.getEdge_station_id()})}" th:text="${edgeStation.getEdge_station_id()}"></a>
+                                                </td>
+                                                <td>
+                                                    <span th:if="${edgeStation.getEdgeStationStatus()}=='Running'" class="badge badge-success" th:text="${edgeStation.getEdgeStationStatus()}"></span>
+                                                    <span th:if="${edgeStation.getEdgeStationStatus()}!='Running'" class="badge badge-danger" th:text="${edgeStation.getEdgeStationStatus()}"></span>
+                                                </td>
+                                                <td th:text="${edgeStation.getEdgeStationDescription()}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /# column -->
+                        <div class="col-lg-4">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4>Machines </h4>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                            <li class="card-option drop-menu">
+                                                <i class="ti-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" role="link"></i>
+                                                <ul class="card-option-dropdown dropdown-menu">
+                                                    <li><a href="#"><i class="ti-loop"></i> Update data</a></li>
+                                                    <li><a href="#"><i class="ti-menu-alt"></i> Detail log</a></li>
+                                                    <li><a href="#"><i class="ti-pulse"></i> Statistics</a></li>
+                                                    <li><a href="#"><i class="ti-power-off"></i> Clear ist</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="card-collapse"><i class="fa fa-window-restore"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body  card-content">
+                                    <table class="table table-responsive table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Status</th>
+                                                <th>Type</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="machine,machineStat:${machines}" th:if="${machineStat.index} lt 5">
+                                                <td>
+                                                    <a th:href="@{/machine_edit(machineId=${machine.getMachine_id()})}" th:text="${machine.getMachine_id()}"></a>
+                                                </td>
+                                                <td>
+                                                    <span th:if="${machine.getMachineStatus()}=='Running'" class="badge badge-success" th:text="${machine.getMachineStatus()}"></span>
+                                                    <span th:if="${machine.getMachineStatus()}!='Running'" class="badge badge-danger" th:text="${machine.getMachineStatus()}"></span>
+                                                </td>
+                                                <td th:text="${machine.getMachineType()}"></td>
+                                                <td th:text="${machine.getMachineDescription()}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# column -->
+                        <div class="col-lg-4">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4>Sensors </h4>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                            <li class="card-option drop-menu">
+                                                <i class="ti-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" role="link"></i>
+                                                <ul class="card-option-dropdown dropdown-menu">
+                                                    <li><a href="#"><i class="ti-loop"></i> Update data</a></li>
+                                                    <li><a href="#"><i class="ti-menu-alt"></i> Detail log</a></li>
+                                                    <li><a href="#"><i class="ti-pulse"></i> Statistics</a></li>
+                                                    <li><a href="#"><i class="ti-power-off"></i> Clear ist</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="card-collapse"><i class="fa fa-window-restore"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body  card-content">
+                                    <table class="table table-responsive table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Status</th>
+                                                <th>Type</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="sensor,sensorStat:${sensors}" th:if="${sensorStat.index} lt 5">
+                                                <td>
+                                                    <a th:href="@{/sensor_edit(sensorId=${sensor.getSensor_id()})}" th:text="${sensor.getSensor_id()}"></a>
+                                                </td>
+                                                <td>
+                                                    <span th:if="${sensor.getSensorStatus()}=='Running'" class="badge badge-success" th:text="${sensor.getSensorStatus()}"></span>
+                                                    <span th:if="${sensor.getSensorStatus()}!='Running'" class="badge badge-danger" th:text="${sensor.getSensorStatus()}"></span>
+                                                </td>
+                                                <td th:text="${sensor.getSensorType()}"></td>
+                                                <td th:text="${sensor.getSensorDescription()}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /# row -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                        <!-- /# column -->
+                        <div class="col-lg-12">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4>Todo List</h4>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="todo-list">
+                                    <div class="tdl-holder">
+                                        <div class="tdl-content">
+                                            <ul>
+                                                <li>
+                                                    <label>
+                                                        <input type="checkbox"><i></i><span>Upgrade Sensor Firmware</span>
+                                                        <a href='#' class="ti-close"></a>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label>
+                                                        <input type="checkbox" checked><i></i><span>Check Machine Status</span>
+                                                        <a href='#' class="ti-close"></a>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label>
+                                                        <input type="checkbox"><i></i><span>Initialize 12 sensors</span>
+                                                        <a href='#' class="ti-close"></a>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label>
+                                                        <input type="checkbox" checked><i></i><span>Upload sensor data</span>
+                                                        <a href='#' class="ti-close"></a>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <input type="text" class="tdl-new form-control" placeholder="Write new item and hit 'Enter'...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# column -->
+                    </div>
+                    <!-- /# row -->
+                 </div>
+                 <!-- /# card -->
+             </div>
+             <!-- /# column -->
+         </div>
+        <!-- /# row -->
+        </div>
+    </div>
+
+<script th:inline="javascript">
+
+    function initMap() {
+        var edgeStations = [[${edgeStations}]];
+        var machines = [[${machines}]];
+        var sensors = [[${sensors}]];
+
+        var edgeStationFeatures = [];
+        var machineFeatures = [];
+        var sensorFeatures = [];
+        for (i = 0; i < edgeStations.length; i++) {
+            edgeStationFeatures[i] = {
+                position: new google.maps.LatLng(edgeStations[i].latitude, edgeStations[i].longitude),
+                id: edgeStations[i].edge_station_id,
+                status: edgeStations[i].edgeStationStatus,
+                description: edgeStations[i].edgeStationDescription
+            }
+        }
+
+        for (i = 0; i < machines.length; i++) {
+            machineFeatures[i] = {
+                position: new google.maps.LatLng(machines[i].latitude, machines[i].longitude),
+                id: machines[i].machine_id,
+                type: machines[i].machineType,
+                status: machines[i].machineStatus,
+                description: machines[i].machineDescription
+            }
+        }
+
+        for (i = 0; i < sensors.length; i++) {
+            sensorFeatures[i] = {
+                position: new google.maps.LatLng(sensors[i].latitude, sensors[i].longitude),
+                id: sensors[i].sensor_id,
+                type: sensors[i].sensorType,
+                status: sensors[i].sensorStatus,
+                description: sensors[i].sensorDescription
+            }
+        }
+
+        var location = {lat: 37.336237, lng: -121.881209};
+        var map = new google.maps.Map(
+            document.getElementById('map'), {zoom: 9, center: location});
+
+
+        for (var i = 0; i < edgeStationFeatures.length; i++) {
+            var marker = new google.maps.Marker({
+                position: edgeStationFeatures[i].position,
+                map: map,
+                icon: "assets/images/edgestation.png"
+            });
+
+            var content = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<div id="bodyContent">'+
+                '<p>'+ "<b>Edge Station ID: </b>"+edgeStationFeatures[i].id +'</p>'+
+                '<p>'+ "<b>Status: </b>"+edgeStationFeatures[i].status +'</p>'+
+                '<p>'+ "<b>Location: </b>"+edgeStationFeatures[i].position.toString() +'</p>'+
+                '<p>'+ "<b>Description: </b>"+edgeStationFeatures[i].description +'</p>'+
+                '</div>'+
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                return function() {
+                    infowindow.setContent(content);
+                    infowindow.open(map,marker);
+                };
+            })(marker,content,infowindow));
+        };
+
+
+        for (var i = 0; i < machineFeatures.length; i++) {
+
+            var iconBase = 'assets/images/';
+            var icons = {
+                Tractor: {
+                    icon: iconBase + 'tractor.png'
+                },
+                Drone: {
+                    icon: iconBase + 'drone.png'
+                },
+                Truck: {
+                    icon: iconBase + 'truck.png'
+                }
+            };
+
+            var marker = new google.maps.Marker({
+                position: machineFeatures[i].position,
+                map: map,
+                icon: icons[machineFeatures[i].type].icon
+            });
+
+            var content = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<div id="bodyContent">'+
+                '<p>'+ "<b>Machine ID: </b>"+machineFeatures[i].id +'</p>'+
+                '<p>'+ "<b>Type: </b>"+machineFeatures[i].type +'</p>'+
+                '<p>'+ "<b>Status: </b>"+machineFeatures[i].status +'</p>'+
+                '<p>'+ "<b>Location: </b>"+machineFeatures[i].position.toString() +'</p>'+
+                '<p>'+ "<b>Description: </b>"+machineFeatures[i].description +'</p>'+
+                '</div>'+
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                return function() {
+                    infowindow.setContent(content);
+                    infowindow.open(map,marker);
+                };
+            })(marker,content,infowindow));
+        };
+
+
+
+
+        for (var i = 0; i < sensorFeatures.length; i++) {
+            var marker = new google.maps.Marker({
+                position: sensorFeatures[i].position,
+                map: map,
+                icon: "assets/images/sensor.png"
+            });
+
+            var content = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<div id="bodyContent">'+
+                '<p>'+ "<b>Sensor ID: </b>"+sensorFeatures[i].id +'</p>'+
+                '<p>'+ "<b>Type: </b>"+sensorFeatures[i].type +'</p>'+
+                '<p>'+ "<b>Status: </b>"+sensorFeatures[i].status +'</p>'+
+                '<p>'+ "<b>Location: </b>"+sensorFeatures[i].position.toString() +'</p>'+
+                '<p>'+ "<b>Description: </b>"+sensorFeatures[i].description +'</p>'+
+                '</div>'+
+                '</div>';
+
+            var infowindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                return function() {
+                    infowindow.setContent(content);
+                    infowindow.open(map,marker);
+                };
+            })(marker,content,infowindow));
+        };
+
+    }
+
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJW4jsPlNKgv6jFm3B5Edp5ywgdqLWdmc&callback=initMap">
+</script>
+
+<script src="assets/js/lib/jquery.min.js"></script>
+<!-- jquery vendor -->
+<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+<!-- nano scroller -->
+<script src="assets/js/lib/sidebar.js"></script>
+<!-- sidebar -->
+<script src="assets/js/lib/bootstrap.min.js"></script>
+<!-- bootstrap -->
+<script src="assets/js/lib/mmc-common.js"></script>
+<script src="assets/js/lib/mmc-chat.js"></script>
+<!--  Chart js -->
+<script src="assets/js/lib/chart-js/Chart.bundle.js"></script>
+<script src="assets/js/lib/chart-js/chartjs-init.js"></script>
+<!-- // Chart js -->
+<!--  Datamap -->
+<script src="assets/js/lib/datamap/d3.min.js"></script>
+<script src="assets/js/lib/datamap/topojson.js"></script>
+<script src="assets/js/lib/datamap/datamaps.world.min.js"></script>
+<script src="assets/js/lib/datamap/datamap-init.js"></script>
+<script src="assets/lib/lobipanel/js/lobipanel.js"></script>
+<!-- // Datamap -->
+<script src="assets/js/scripts.js"></script>
+<!-- scripit init-->
+<script>
+    $(document).ready(function() {
+        $('#lobipanel-custom-control').lobiPanel({
+            reload: false,
+            close: false,
+            editTitle: false
+        });
+    });
+</script>
+</body>
+
+</html>

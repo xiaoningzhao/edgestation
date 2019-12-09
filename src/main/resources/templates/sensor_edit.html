@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="head :: common"></head>
+
+<body>
+    <div th:replace="head :: sidebar"></div>
+    <div th:replace="head :: header"></div>
+    <div th:replace="head :: chat-sidebar"></div>
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1>Sensor Configuration</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                    <div class="col-lg-4 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li class="active">Home</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                </div>
+                <!-- /# row -->
+                <div class="main-content">
+                    <div th:replace="head :: status-bar"></div>
+                    <!-- /# row -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4 th:text="'Sensor '+${sensor.getSensor_id()}"></h4>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                             
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="basic-elements">
+                                        <form th:action="@{/sensor_update}" th:object="${sensor}" method="POST">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label>ID</label>
+                                                        <input th:field="*{sensor_id}" type="text" class="form-control" readonly="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Status</label>
+                                                        <select th:field="*{sensorStatus}" class="form-control">
+                                                            <option value="Running">Running</option>
+                                                            <option value="Stop">Stop</option>
+                                                            <option value="Maintaining">Maintaining</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Type</label>
+                                                        <input th:field="*{sensorType}" type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>EdgeStationID</label>
+                                                        <input th:field="*{edgeStationId}" type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>MachineID</label>
+                                                        <input th:field="*{machineId}" type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Description</label>
+                                                        <textarea th:field="*{sensorDescription}" class="form-control" rows="3"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Latitude</label>
+                                                        <input th:field="*{latitude}" type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Longitude</label>
+                                                        <input th:field="*{longitude}" type="text" class="form-control">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-default">Submit</button>
+                                                    <input type="button" class="btn"  value="Back" onclick="javascript:history.go(-1);"/>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4 th:text="Location"></h4>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="basic-elements">
+                                        <div id="map" style="width: 100%; height: 400px; background-color: grey"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# column -->
+                    </div><!-- /# row -->
+                    <!-- /# row -->
+                 </div>
+                 <!-- /# card -->
+             </div>
+             <!-- /# column -->
+         </div>
+         <!-- /# row -->     </div>
+     <!-- /# main content -->
+
+<!-- /# content wrap -->
+<script th:inline="javascript">
+
+    function initMap() {
+        var sensor = [[${sensor}]];
+
+        var sensorFeatures = {
+            position: new google.maps.LatLng(sensor.latitude, sensor.longitude),
+            id: sensor.sensor_id,
+            status: sensor.sensorStatus,
+            type: sensor.sensorType,
+            description: sensor.sensorDescription
+        }
+
+        var map = new google.maps.Map(
+            document.getElementById('map'), {zoom: 8, center: sensorFeatures.position});
+
+        var marker = new google.maps.Marker({
+            position: sensorFeatures.position,
+            map: map,
+            icon: "assets/images/sensor.png"
+        });
+
+        var content = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<div id="bodyContent">'+
+            '<p>'+ "<b>Sensor ID: </b>"+sensorFeatures.id +'</p>'+
+            '<p>'+ "<b>Type: </b>"+sensorFeatures.type +'</p>'+
+            '<p>'+ "<b>Status: </b>"+sensorFeatures.status +'</p>'+
+            '<p>'+ "<b>Location: </b>"+sensorFeatures.position.toString() +'</p>'+
+            '<p>'+ "<b>Description: </b>"+sensorFeatures.description +'</p>'+
+            '</div>'+
+            '</div>';
+
+        var infowindow = new google.maps.InfoWindow();
+
+        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+            return function() {
+                infowindow.setContent(content);
+                infowindow.open(map,marker);
+            };
+        })(marker,content,infowindow));
+
+    }
+
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJW4jsPlNKgv6jFm3B5Edp5ywgdqLWdmc&callback=initMap">
+</script>
+<script src="assets/js/lib/jquery.min.js"></script>
+<!-- jquery vendor -->
+<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+<!-- nano scroller -->
+<script src="assets/js/lib/sidebar.js"></script>
+<!-- sidebar -->
+<script src="assets/js/lib/bootstrap.min.js"></script>
+<!-- bootstrap -->
+<script src="assets/js/lib/mmc-common.js"></script>
+<script src="assets/js/lib/mmc-chat.js"></script>
+<!--  Chart js -->
+<script src="assets/js/lib/chart-js/Chart.bundle.js"></script>
+<script src="assets/js/lib/chart-js/chartjs-init.js"></script>
+<!-- // Chart js -->
+<!--  Datamap -->
+<script src="assets/js/lib/datamap/d3.min.js"></script>
+<script src="assets/js/lib/datamap/topojson.js"></script>
+<script src="assets/js/lib/datamap/datamaps.world.min.js"></script>
+<script src="assets/js/lib/datamap/datamap-init.js"></script>
+<script src="assets/lib/lobipanel/js/lobipanel.js"></script>
+<!-- // Datamap -->
+<script src="assets/js/scripts.js"></script>
+<!-- scripit init-->
+<script>
+    $(document).ready(function() {
+        $('#lobipanel-custom-control').lobiPanel({
+            reload: false,
+            close: false,
+            editTitle: false
+        });
+    });
+</script>
+</body>
+
+</html>

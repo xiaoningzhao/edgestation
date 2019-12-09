@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="head :: common"></head>
+
+<body>
+    <div th:replace="head :: sidebar"></div>
+    <div th:replace="head :: header"></div>
+    <div th:replace="head :: chat-sidebar"></div>
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1>Sensor</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                    <div class="col-lg-4 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li class="active">Home</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                </div>
+                <!-- /# row -->
+                <div class="main-content">
+                    <div th:replace="head :: status-bar"></div>
+                    <!-- /# row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4>Sensors</h4>
+                                    <a style="color: #A333C8" type="button" th:href="@{/sensor_init}">[Create New Sensor]</a>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                            <li class="card-option drop-menu"><i class="ti-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" role="link"></i>
+                                                <ul class="card-option-dropdown dropdown-menu">
+                                                    <li><a href="#"><i class="ti-loop"></i> Update data</a></li>
+                                                    <li><a href="#"><i class="ti-menu-alt"></i> Detail log</a></li>
+                                                    <li><a href="#"><i class="ti-pulse"></i> Statistics</a></li>
+                                                    <li><a href="#"><i class="ti-power-off"></i> Clear ist</a></li>
+                                                </ul>
+                                            </li>
+                                             
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-responsive table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Status</th>
+                                                <th>Type</th>
+                                                <th>Description</th>
+                                                <th>EdgeStationID</th>
+                                                <th>MachineID</th>
+                                                <th>Location</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="sensor,sensorStat:${sensors}">
+                                                <td>
+                                                    <a th:href="@{/sensor_edit(sensorId=${sensor.getSensor_id()})}" th:text="${sensor.getSensor_id()}"></a>
+                                                </td>
+                                                <td>
+                                                    <span th:if="${sensor.getSensorStatus()}=='Running'" class="badge badge-success" th:text="${sensor.getSensorStatus()}"></span>
+                                                    <span th:if="${sensor.getSensorStatus()}!='Running'" class="badge badge-danger" th:text="${sensor.getSensorStatus()}"></span>
+                                                </td>
+                                                <td th:text="${sensor.getSensorType()}"></td>
+                                                <td th:text="${sensor.getSensorDescription()}"></td>
+                                                <td th:text="${sensor.getEdgeStationId()}"></td>
+                                                <td th:text="${sensor.getMachineId()}"></td>
+                                                <td th:text="'('+${sensor.getLatitude()}+', '+${sensor.getLongitude()}+')'"></td>
+                                                <td>
+                                                    <a th:if="${sensor.getSensorStatus()}=='Running'" th:href="@{/sensor_status(sensorId=${sensor.getSensor_id()},status='Stop')}">Stop</a>
+                                                    <a th:if="${sensor.getSensorStatus()}!='Running'" th:href="@{/sensor_status(sensorId=${sensor.getSensor_id()},status='Running')}">Start</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><!-- /# card -->
+                        </div>
+                        <!-- /# column -->
+                    </div>
+                    <!-- /# row -->
+                 </div>
+                 <!-- /# card -->
+             </div>
+             <!-- /# column -->
+         </div>
+         <!-- /# row -->     </div>
+     <!-- /# main content -->
+
+<!-- /# content wrap -->
+<script src="assets/js/lib/jquery.min.js"></script>
+<!-- jquery vendor -->
+<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+<!-- nano scroller -->
+<script src="assets/js/lib/sidebar.js"></script>
+<!-- sidebar -->
+<script src="assets/js/lib/bootstrap.min.js"></script>
+<!-- bootstrap -->
+<script src="assets/js/lib/mmc-common.js"></script>
+<script src="assets/js/lib/mmc-chat.js"></script>
+<!--  Chart js -->
+<script src="assets/js/lib/chart-js/Chart.bundle.js"></script>
+<script src="assets/js/lib/chart-js/chartjs-init.js"></script>
+<!-- // Chart js -->
+<!--  Datamap -->
+<script src="assets/js/lib/datamap/d3.min.js"></script>
+<script src="assets/js/lib/datamap/topojson.js"></script>
+<script src="assets/js/lib/datamap/datamaps.world.min.js"></script>
+<script src="assets/js/lib/datamap/datamap-init.js"></script>
+<script src="assets/lib/lobipanel/js/lobipanel.js"></script>
+<!-- // Datamap -->
+<script src="assets/js/scripts.js"></script>
+<!-- scripit init-->
+<script>
+    $(document).ready(function() {
+        $('#lobipanel-custom-control').lobiPanel({
+            reload: false,
+            close: false,
+            editTitle: false
+        });
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="head :: common"></head>
+
+<body>
+    <div th:replace="head :: sidebar"></div>
+    <div th:replace="head :: header"></div>
+    <div th:replace="head :: chat-sidebar"></div>
+
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1>Profile</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li class="active">Profile</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card alert">
+                                <div class="card-body">
+									<div class="user-profile">
+										<div class="row">
+											<div class="col-lg-4">
+												<div class="user-photo m-b-30">
+													<img class="img-responsive" src="assets/images/user-profile.jpg" alt="" />
+												</div>
+												<div class="user-work">
+													<h4>work</h4>
+													<div class="work-content">
+														<h3>ABC Company </h3>
+														<p>123, South street</p>
+														<p>CA, 12345</p>
+													</div>
+													<div class="work-content">
+														<h3>ABC</h3>
+														<p>123, South street</p>
+														<p>CA, 12345</p>
+													</div>
+												</div>
+												<div class="user-skill">
+													<h4>Skill</h4>
+													<ul>
+														<li><a href="#">Branding</a></li>
+														<li><a href="#">UI/UX</a></li>
+													</ul>
+												</div>
+											</div>
+											<div class="col-lg-8">
+												<div class="user-profile-name" th:text="${session.user.getUserName()}"></div>
+												<div class="user-Location"><i class="ti-location-pin"></i> San Jose, CA</div>
+												<div class="user-job-title">System Administrator</div>
+												<div class="ratings">
+													<h4>Ratings</h4>
+													<div class="rating-star">
+														<span>8.9</span>
+														<i class="ti-star color-primary"></i>
+														<i class="ti-star color-primary"></i>
+														<i class="ti-star color-primary"></i>
+														<i class="ti-star color-primary"></i>
+														<i class="ti-star"></i>
+													</div>
+												</div>
+												<div class="user-send-message"><button class="btn btn-primary btn-addon" type="button"><i class="ti-email"></i>Send Message</button></div>
+												<div class="custom-tab user-profile-tab">
+													<ul class="nav nav-tabs" role="tablist">
+														<li role="presentation" class="active"><a href="#1" aria-controls="1" role="tab" data-toggle="tab">About</a></li>
+													</ul>
+													<div class="tab-content">
+														<div role="tabpanel" class="tab-pane active" id="1">
+															<div class="contact-information">
+																<h4>Contact information</h4>
+																<div class="phone-content">
+																	<span class="contact-title">Phone:</span>
+																	<span class="phone-number">+1 (123) 456 7890</span>
+																</div>
+																<div class="address-content">
+																	<span class="contact-title">Address:</span>
+																	<span class="mail-address">123, Abc, CA</span>
+																</div>
+																<div class="email-content">
+																	<span class="contact-title">Email:</span>
+																	<span class="contact-email">xiaoningzhao@abc.com</span>
+																</div>
+																<div class="website-content">
+																	<span class="contact-title">Website:</span>
+																	<span class="contact-website">www.xiaoningzhao.com</span>
+																</div>
+																<div class="skype-content">
+																	<span class="contact-title">Skype:</span>
+																	<span class="contact-skype">xiaoningzhao</span>
+																</div>
+															</div>
+															<div class="basic-information">
+																<h4>Basic information</h4>
+																<div class="birthday-content">
+																	<span class="contact-title">Birthday:</span>
+																	<span class="birth-date">January 31, 1990 </span>
+																</div>
+																<div class="gender-content">
+																	<span class="contact-title">Gender:</span>
+																	<span class="gender">Male</span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+                            </div>
+                        </div><!-- /# column -->
+						<div class="col-lg-6">
+							<div class="row">
+								<div class="col-lg-3">
+									<div class="card">
+										<div class="stat-widget-one">
+											<div class="profile-widget">
+												<div class="stat-text">Job Done</div>
+												<div class="stat-digit">19</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<div class="card">
+										<div class="stat-widget-one">
+											<div class="profile-widget">
+												<div class="stat-text">Ongoing</div>
+												<div class="stat-digit">6</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<div class="card">
+										<div class="stat-widget-one">
+											<div class="profile-widget">
+												<div class="stat-text">Reject</div>
+												<div class="stat-digit">6</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<div class="card">
+										<div class="stat-widget-one">
+											<div class="profile-widget">
+												<div class="stat-text">Upcomming</div>
+												<div class="stat-digit">29</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="card alert">
+										<div class="card-header">
+											<h4>Task </h4>
+											<div class="card-header-right-icon">
+												<ul>
+													<li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+													 
+												</ul>
+											</div>
+										</div>
+										<div class="todo-list">
+											<div class="tdl-holder">
+												<div class="tdl-content">
+                                                    <ul>
+                                                        <li>
+                                                            <label>
+                                                                <input type="checkbox"><i></i><span>Upgrade Sensor Firmware</span>
+                                                                <a href='#' class="ti-close"></a>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label>
+                                                                <input type="checkbox" checked><i></i><span>Check Machine Status</span>
+                                                                <a href='#' class="ti-close"></a>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label>
+                                                                <input type="checkbox"><i></i><span>Initialize 12 sensors</span>
+                                                                <a href='#' class="ti-close"></a>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label>
+                                                                <input type="checkbox" checked><i></i><span>Upload sensor data</span>
+                                                                <a href='#' class="ti-close"></a>
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+												</div>
+												<input type="text" class="tdl-new form-control" placeholder="Write new item and hit 'Enter'...">
+											</div>
+										</div>
+									</div><!-- /# card -->
+								</div>
+							</div>
+						</div><!-- /# column -->
+                    </div><!-- /# row -->
+                 </div>
+            </div><!-- /# container-fluid -->
+        </div><!-- /# main -->
+    </div><!-- /# content wrap -->
+
+
+
+
+
+
+    <script src="assets/js/lib/jquery.min.js"></script><!-- jquery vendor -->
+    <script src="assets/js/lib/jquery.nanoscroller.min.js"></script><!-- nano scroller -->
+    <script src="assets/js/lib/sidebar.js"></script><!-- sidebar -->
+    <script src="assets/js/lib/bootstrap.min.js"></script><!-- bootstrap -->
+    <script src="assets/js/lib/mmc-common.js"></script>
+    <script src="assets/js/lib/mmc-chat.js"></script>
+    <script src="assets/js/scripts.js"></script><!-- scripit init-->
+
+
+    
+
+
+</body>
+
+</html>

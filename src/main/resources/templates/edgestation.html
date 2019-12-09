@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="head :: common"></head>
+
+<body>
+    <div th:replace="head :: sidebar"></div>
+    <div th:replace="head :: header"></div>
+    <div th:replace="head :: chat-sidebar"></div>
+    <div class="content-wrap">
+        <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <h1>Edge Station</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                    <div class="col-lg-4 p-0">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="/">Dashboard</a></li>
+                                    <li class="active">Home</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /# column -->
+                </div>
+                <!-- /# row -->
+                <div class="main-content">
+                    <div th:replace="head :: status-bar"></div>
+                    <!-- /# row -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card alert">
+                                <div class="card-header">
+                                    <h4>Edge Stations</h4>
+                                    <a style="color: #A333C8" type="button" th:href="@{/edgestation_init}">[Create New Edge Station]</a>
+                                    <div class="card-header-right-icon">
+                                        <ul>
+                                            <li class="card-close" data-dismiss="alert"><i class="ti-close"></i></li>
+                                            <li class="card-option drop-menu"><i class="ti-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" role="link"></i>
+                                                <ul class="card-option-dropdown dropdown-menu">
+                                                    <li><a href="#"><i class="ti-loop"></i> Update data</a></li>
+                                                    <li><a href="#"><i class="ti-menu-alt"></i> Detail log</a></li>
+                                                    <li><a href="#"><i class="ti-pulse"></i> Statistics</a></li>
+                                                    <li><a href="#"><i class="ti-power-off"></i> Clear ist</a></li>
+                                                </ul>
+                                            </li>
+                                             
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-responsive table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Status</th>
+                                                <th>Description</th>
+                                                <th>Location</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="edgeStation,edgeStationStat:${edgeStations}">
+                                                <td>
+                                                    <a th:href="@{/edgestation_edit(edgeStationId=${edgeStation.getEdge_station_id()})}" th:text="${edgeStation.getEdge_station_id()}"></a>
+                                                </td>
+                                                <td>
+                                                    <span th:if="${edgeStation.getEdgeStationStatus()}=='Running'" class="badge badge-success" th:text="${edgeStation.getEdgeStationStatus()}"></span>
+                                                    <span th:if="${edgeStation.getEdgeStationStatus()}!='Running'" class="badge badge-danger" th:text="${edgeStation.getEdgeStationStatus()}"></span>
+                                                </td>
+                                                <td th:text="${edgeStation.getEdgeStationDescription()}"></td>
+                                                <td th:text="'('+${edgeStation.getLatitude()}+', '+${edgeStation.getLongitude()}+')'"></td>
+                                                <td>
+                                                    <a th:if="${edgeStation.getEdgeStationStatus()}=='Running'" th:href="@{/edgestation_status(edgeStationId=${edgeStation.getEdge_station_id()},status='Stop')}">Stop</a>
+                                                    <a th:if="${edgeStation.getEdgeStationStatus()}!='Running'" th:href="@{/edgestation_status(edgeStationId=${edgeStation.getEdge_station_id()},status='Running')}">Start</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><!-- /# card -->
+                        </div><!-- /# column -->
+                        <!-- /# column -->
+                    </div>
+                    <!-- /# row -->
+                 </div>
+                 <!-- /# card -->
+             </div>
+             <!-- /# column -->
+         </div>
+         <!-- /# row -->     </div>
+     <!-- /# main content -->
+
+<!-- /# content wrap -->
+<script src="assets/js/lib/jquery.min.js"></script>
+<!-- jquery vendor -->
+<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+<!-- nano scroller -->
+<script src="assets/js/lib/sidebar.js"></script>
+<!-- sidebar -->
+<script src="assets/js/lib/bootstrap.min.js"></script>
+<!-- bootstrap -->
+<script src="assets/js/lib/mmc-common.js"></script>
+<script src="assets/js/lib/mmc-chat.js"></script>
+<!--  Chart js -->
+<script src="assets/js/lib/chart-js/Chart.bundle.js"></script>
+<script src="assets/js/lib/chart-js/chartjs-init.js"></script>
+<!-- // Chart js -->
+<!--  Datamap -->
+<script src="assets/js/lib/datamap/d3.min.js"></script>
+<script src="assets/js/lib/datamap/topojson.js"></script>
+<script src="assets/js/lib/datamap/datamaps.world.min.js"></script>
+<script src="assets/js/lib/datamap/datamap-init.js"></script>
+<script src="assets/lib/lobipanel/js/lobipanel.js"></script>
+<!-- // Datamap -->
+<script src="assets/js/scripts.js"></script>
+<!-- scripit init-->
+<script>
+    $(document).ready(function() {
+        $('#lobipanel-custom-control').lobiPanel({
+            reload: false,
+            close: false,
+            editTitle: false
+        });
+    });
+</script>
+</body>
+
+</html>
